@@ -1,0 +1,28 @@
+{
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "login": "TheReprator",
+      "id": 10286587,
+      "node_id": "MDQ6VXNlcjEwMjg2NTg3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10286587?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/TheReprator",
+      "html_url": "https://github.com/TheReprator",
+      "followers_url": "https://api.github.com/users/TheReprator/followers",
+      "following_url": "https://api.github.com/users/TheReprator/following{/other_user}",
+      "gists_url": "https://api.github.com/users/TheReprator/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/TheReprator/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/TheReprator/subscriptions",
+      "organizations_url": "https://api.github.com/users/TheReprator/orgs",
+      "repos_url": "https://api.github.com/users/TheReprator/repos",
+      "events_url": "https://api.github.com/users/TheReprator/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/TheReprator/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false,
+      "score": 1.0
+    }
+  ]
+}

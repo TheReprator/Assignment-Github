@@ -1,0 +1,33 @@
+# USER LIST
+GET {{base-url}}/users
+Content-Type: application/json
+Authorization: Token {{auth_token}}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+# USER DETAIL
+GET {{base-url}}/users/{{username}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# USER REPOS
+GET {{base-url}}/users/{{username}}/repos
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# USER SEARCH LIST
+GET {{base-url}}/search/users?q={{username}}
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###

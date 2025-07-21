@@ -1,0 +1,4 @@
+<resources>
+    <string name="test_tag_user_screen_loader">Loader</string>
+    <string name="test_tag_user_screen_search">searchTextField</string>
+</resources>

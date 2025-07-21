@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_retry">Retry</string>
+    <string name="app_error_generic">An Error occurred</string>
+    <string name="app_back">Back</string>
+    <string name="user_screen_search_title">Search Users</string>
+    <string name="user_screen_search_title_close">Close search</string>
+    <string name="user_screen_search_empty">No user found.</string>
+    <string name="user_detail_screen_failed">Failed to load userInfo.</string>
+    <string name="user_detail_screen_repo_failed">Failed to load repositories.</string>
+    <string name="user_detail_screen_repo">Repositories</string>
+    <string name="user_detail_screen_language">Language</string>
+    <string name="user_detail_screen_followers">Followers</string>
+    <string name="user_detail_screen_following">Following</string>
+    <string name="user_detail_screen_repo_no">No repositories found.</string>
+    <string name="user_detail_screen_repo_star">Stars</string>
+</resources>
