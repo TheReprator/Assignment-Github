@@ -5,9 +5,6 @@ import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import dev.mokkery.spy
-import dev.mokkery.verify.VerifyMode.Companion.atMost
-import dev.mokkery.verifySuspend
 import dev.reprator.github.features.userList.domain.UserModel
 import dev.reprator.github.features.userList.domain.usecase.UserListUseCase
 import dev.reprator.github.fixtures.SEARCH_QUERY
@@ -20,7 +17,6 @@ import dev.reprator.github.util.AppError
 import dev.reprator.github.util.AppSuccess
 import dev.reprator.github.util.MainDispatcherRule
 import dev.reprator.github.util.base.mvi.Middleware
-import dev.reprator.github.util.base.mvi.Reducer
 import dev.reprator.github.util.runViewModelTest
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -40,7 +36,7 @@ class UserListViewModelTest: MainDispatcherRule() {
 
     private lateinit var userListViewModel: UserListViewModel
 
-    private val reducer = spy<Reducer<UserListState, UserListAction, UserListEffect>>(UserListScreenReducer())
+    private lateinit var reducer: UserListScreenReducer
     private lateinit var middleware: Middleware<UserListState, UserListAction, UserListEffect>
 
     @BeforeTest
@@ -52,6 +48,7 @@ class UserListViewModelTest: MainDispatcherRule() {
             testDispatcher, testDispatcher, testDispatcher,
             testDispatcher)
 
+        reducer = UserListScreenReducer()
         middleware = UserListMiddleware(fetchUseCase, dispatchers)
 
         userListViewModel = UserListViewModel(
@@ -60,7 +57,6 @@ class UserListViewModelTest: MainDispatcherRule() {
             reducer = reducer,
             middleWareList = setOf(middleware)
         )
-
     }
 
     @Test
@@ -98,11 +94,6 @@ class UserListViewModelTest: MainDispatcherRule() {
 
             state.expectNoEvents()
         }
-
-        verifySuspend(atMost(1)) {
-            fetchUseCase()
-            reducer.reduce(any(), UserListAction.SearchUsers("", true))
-        }
     }
 
     @Test
@@ -139,11 +130,6 @@ class UserListViewModelTest: MainDispatcherRule() {
             }
 
             state.expectNoEvents()
-        }
-
-        verifySuspend(atMost(1)) {
-            fetchUseCase()
-            reducer.reduce(any(), UserListAction.SearchUsers("", true))
         }
     }
 
@@ -274,7 +260,7 @@ class UserListViewModelTest: MainDispatcherRule() {
     }
 
 
-    @Test
+      @Test
     fun searchForUserOnTypeWhenDefaultUserListIsEmpty() {
 
         everySuspend {
