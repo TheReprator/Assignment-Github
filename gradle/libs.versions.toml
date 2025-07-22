@@ -69,6 +69,8 @@ ktor-client-serialization-json = { group = "io.ktor", name = "ktor-serialization
 
 logging-napier = { module = "io.github.aakira:napier", version = "2.7.1" }
 
+test-turbine = { module="app.cash.turbine:turbine", version = "1.2.1" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

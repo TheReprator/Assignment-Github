@@ -1,9 +1,7 @@
 package dev.reprator.github.features.userList.presentation
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dev.reprator.github.util.AppCoroutineDispatchers
 import dev.reprator.github.util.base.mvi.MVI
@@ -22,7 +20,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-private const val SEARCH_QUERY_KEY = "searchQuery"
+const val SEARCH_QUERY_KEY = "searchQuery"
 private const val MINIMUM_SEARCH_DEBOUNCE = 100L
 private const val MINIMUM_SEARCH_LENGTH = 3
 
