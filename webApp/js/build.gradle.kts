@@ -10,7 +10,7 @@ plugins {
 }
 
 kotlin {
-    wasmJs {
+    js {
         outputModuleName.set("github")
         browser {
             val rootDirPath = project.rootDir.path

@@ -81,7 +81,7 @@ interface NetworkModule {
                 url {
                     protocol = URLProtocol.HTTPS
                     host = "api.github.com"
-                    headers.append("Authorization", "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")
+                    headers.append("Authorization", "")
                 }
             }
 

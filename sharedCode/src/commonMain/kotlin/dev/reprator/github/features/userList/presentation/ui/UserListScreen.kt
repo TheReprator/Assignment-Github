@@ -145,7 +145,7 @@ private fun UserListScreen(
     onSearchQueryChanged: (String) -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState()
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(12.dp)) {
 
         SearchTextField(currentSearchQuery, onSearchQueryChanged, { query ->
             onAction(UserListAction.SearchUsers(query, state.userList.isEmpty()))

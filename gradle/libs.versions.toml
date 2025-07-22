@@ -9,6 +9,7 @@ androidx-constraintlayout = "2.2.1"
 androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.9.1"
+androidx-uiTest = "1.8.3"
 androidx-navigation = "2.9.0-beta03"
 androidx-testExt = "1.2.1"
 composeHotReload = "1.0.0-beta04"
@@ -17,7 +18,7 @@ junit = "4.13.2"
 kotlin = "2.2.0"
 kotlinx-coroutines = "1.10.2"
 ktor = "3.2.2"
-coil = "3.2.0"
+coil = "3.3.0"
 kotlininject = "0.8.0"
 turbine = "1.2.1"
 ksp = "2.2.0-2.0.2"
@@ -29,12 +30,16 @@ spotless = "7.1.0"
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
+androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
+androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-testExt" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version = "1.0.0-alpha12" }
+androidx-tv-material = { group = "androidx.tv", name = "tv-material", version = "1.0.1" }
 
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name ="lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name ="lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
@@ -69,10 +74,12 @@ ktor-client-serialization-json = { group = "io.ktor", name = "ktor-serialization
 
 logging-napier = { module = "io.github.aakira:napier", version = "2.7.1" }
 
+test-turbine = { module="app.cash.turbine:turbine", version = "1.2.1" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
+compose-hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

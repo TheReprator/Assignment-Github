@@ -5,8 +5,7 @@ import io.github.aakira.napier.Napier
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class UserListScreenReducer :
-    Reducer<UserListState, UserListAction, UserListEffect> {
+class UserListScreenReducer : Reducer<UserListState, UserListAction, UserListEffect> {
 
     override fun reduce(
         previousState: UserListState,
@@ -74,7 +73,9 @@ class UserListScreenReducer :
 
         //Search query is empty, so fetch user list
         return previousState.copy(
-            userLoading = true
+            userLoading = true,
+            errorMessage = "",
+            isError = false,
         ) to null
     }
 }

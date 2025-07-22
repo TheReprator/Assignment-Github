@@ -126,7 +126,7 @@ private fun UserDetailScreen(
     onAction: OnAction,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.padding(12.dp).fillMaxSize()) {
         UserToolbar(
             state.userInfo.userName,
             state.userInfo.profilePic,
