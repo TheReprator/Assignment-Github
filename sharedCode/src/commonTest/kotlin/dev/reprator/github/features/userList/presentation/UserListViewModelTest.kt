@@ -22,6 +22,7 @@ import dev.reprator.github.util.MainDispatcherRule
 import dev.reprator.github.util.base.mvi.Middleware
 import dev.reprator.github.util.base.mvi.Reducer
 import dev.reprator.github.util.runViewModelTest
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -258,6 +259,40 @@ class UserListViewModelTest: MainDispatcherRule() {
 
             testDispatcher.scheduler.advanceUntilIdle()
             testDispatcher.scheduler.runCurrent()
+
+            assertEquals(SEARCH_QUERY, savedStateHandle.getStateFlow<String>(SEARCH_QUERY_KEY,"").value)
+            state.awaitItem()   //Need to check, why 3 events are there, only 2 should be there
+            state.awaitItem()
+            with(state.awaitItem()) {
+                assertEquals(uiUserSearchListModel , this.userListSearch)
+                assertEquals(uiUserListModel , this.userList)
+                assertFalse(this.isError)
+                assertFalse(this.userLoading)
+                assertTrue( this.errorMessage.isEmpty())
+            }
+            state.expectNoEvents()
+        }
+    }
+
+    @Test
+    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsersForJetbrains() {
+
+        everySuspend {
+            fetchUseCase()
+        } returns AppSuccess(uiUserListModel)
+
+        everySuspend {
+            fetchUseCase.searchUser(any())
+        } returns AppSuccess(uiUserSearchListModel)
+
+        runViewModelTest(userListViewModel.uiState, userListViewModel.sideEffect) { state, effect ->
+            effect.expectNoEvents()
+
+            advanceUntilIdle()
+
+            userListViewModel.onSearchQueryChanged(SEARCH_QUERY)
+
+            advanceUntilIdle()
 
             assertEquals(SEARCH_QUERY, savedStateHandle.getStateFlow<String>(SEARCH_QUERY_KEY,"").value)
             state.awaitItem()   //Need to check, why 3 events are there, only 2 should be there
