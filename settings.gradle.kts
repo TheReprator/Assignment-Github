@@ -34,5 +34,6 @@ plugins {
 
 include(":sharedCode")
 include(":androidApp:app")
+include(":androidApp:tv")
 include(":desktopApp")
 include(":webapp:js")
