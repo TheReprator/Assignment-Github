@@ -41,6 +41,13 @@ buildAndroid: cleanBuild
 	$(GRADLEW) androidApp:app:installDebug
 	@echo "✅ Done!"
 
+# Run IOS build
+buildIOS: cleanBuild
+	@echo "IOS build"
+	chmod +x ./scripts/ios_script.sh
+	./scripts/ios_script.sh
+	@echo "✅ Done!"
+
 # Run Android Ui test
 testUiAndroid: cleanBuild
 	@echo "Android UI test"
