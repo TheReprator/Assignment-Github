@@ -1,6 +1,7 @@
-@file:OptIn(ExperimentalWasmDsl::class)
+@file:OptIn(ExperimentalWasmDsl::class, ExperimentalComposeLibrary::class)
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.invoke
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -44,7 +45,12 @@ kotlin {
     wasmJs {
         browser()
     }
-    
+
+    js {
+        browser()
+        binaries.executable()
+    }
+
     sourceSets {
         val desktopMain by getting
 
@@ -93,6 +99,7 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.test.turbine)
+            implementation(compose.uiTest)
         }
 
         desktopMain.dependencies {
@@ -102,6 +109,10 @@ kotlin {
         }
 
         wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
+
+        jsMain.dependencies {
             implementation(libs.ktor.client.js)
         }
     }

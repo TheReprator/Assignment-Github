@@ -49,4 +49,7 @@ composeCompiler {
 dependencies {
     implementation(projects.sharedCode)
     implementation(libs.androidx.activity.compose)
+
+    androidTestImplementation(libs.androidx.uitest.junit4)
+    debugImplementation(libs.androidx.uitest.testManifest)
 }
