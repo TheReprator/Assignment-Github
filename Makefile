@@ -41,16 +41,66 @@ buildAndroid: cleanBuild
 	$(GRADLEW) androidApp:app:installDebug
 	@echo "✅ Done!"
 
+# Run IOS build
+buildIOS: cleanBuild
+	@echo "IOS build"
+	chmod +x ./scripts/ios_script.sh
+	./scripts/ios_script.sh
+	@echo "✅ Done!"
+
+# Run Android Ui test
+testUiAndroid: cleanBuild
+	@echo "Android UI test"
+	$(GRADLEW) androidApp:app:connectedDebugAndroidTest
+	@echo "✅ Done!"
+
 # Run Desktop build
 buildDesktop: cleanBuild
 	@echo "Desktop build"
 	$(GRADLEW) :desktopapp:run
 	@echo "✅ Done!"
 
-# Run web build
-buildWeb: cleanBuild
-	@echo "Web build"
-	$(GRADLEW) webApp:js:wasmJsBrowserDevelopmentRun
+# Run Desktop Ui test
+testUiDesktop: cleanBuild
+	@echo "Desktop UI test"
+	$(GRADLEW) :desktopapp:jvmTest
+	@echo "✅ Done!"
+
+# Run Desktop hot reload build
+buildHotDesktop: clear
+	@echo "Desktop Hot reload build"
+	$(GRADLEW) :desktopapp:hotRunJvm --auto
+	@echo "✅ Done!"
+
+# Run wasm build
+buildWasmWeb: cleanBuild
+	@echo "Web Wasm build"
+	$(GRADLEW) webApp:wasm:wasmJsBrowserDevelopmentRun
+	@echo "✅ Done!"
+
+# Run wasm UI test
+testUiWasmWeb: cleanBuild
+	@echo "Web wasm UI test"
+	$(GRADLEW) webApp:wasm:wasmJsBrowserTest
+	@echo "✅ Done!"
+
+# Run js build
+buildJsWeb: cleanBuild
+	@echo "Web JS build"
+	$(GRADLEW) webApp:js:jsBrowserDevelopmentRun
+	@echo "✅ Done!"
+
+# Run JS UI test
+testUiJsWeb: cleanBuild
+	@echo "Web Js UI test"
+	$(GRADLEW) webApp:wasm:jsBrowserTest
+	@echo "✅ Done!"
+
+
+# Run wasm UI test
+testUiJsWeb: cleanBuild
+	@echo "Web Js UI test"
+	$(GRADLEW) iosApp:iosSimulatorArm64Test
 	@echo "✅ Done!"
 
 # Run All test

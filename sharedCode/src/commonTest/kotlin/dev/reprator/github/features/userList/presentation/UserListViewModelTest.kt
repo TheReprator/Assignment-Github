@@ -5,6 +5,9 @@ import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
+import dev.mokkery.spy
+import dev.mokkery.verify.VerifyMode.Companion.atMost
+import dev.mokkery.verifySuspend
 import dev.reprator.github.features.userList.domain.UserModel
 import dev.reprator.github.features.userList.domain.usecase.UserListUseCase
 import dev.reprator.github.fixtures.SEARCH_QUERY
@@ -17,7 +20,9 @@ import dev.reprator.github.util.AppError
 import dev.reprator.github.util.AppSuccess
 import dev.reprator.github.util.MainDispatcherRule
 import dev.reprator.github.util.base.mvi.Middleware
+import dev.reprator.github.util.base.mvi.Reducer
 import dev.reprator.github.util.runViewModelTest
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -36,7 +41,7 @@ class UserListViewModelTest: MainDispatcherRule() {
 
     private lateinit var userListViewModel: UserListViewModel
 
-    private lateinit var reducer: UserListScreenReducer
+    private val reducer = spy<Reducer<UserListState, UserListAction, UserListEffect>>(UserListScreenReducer())
     private lateinit var middleware: Middleware<UserListState, UserListAction, UserListEffect>
 
     @BeforeTest
@@ -48,7 +53,6 @@ class UserListViewModelTest: MainDispatcherRule() {
             testDispatcher, testDispatcher, testDispatcher,
             testDispatcher)
 
-        reducer = UserListScreenReducer()
         middleware = UserListMiddleware(fetchUseCase, dispatchers)
 
         userListViewModel = UserListViewModel(
@@ -94,6 +98,11 @@ class UserListViewModelTest: MainDispatcherRule() {
 
             state.expectNoEvents()
         }
+
+        verifySuspend(atMost(1)) {
+            fetchUseCase()
+            reducer.reduce(any(), UserListAction.SearchUsers("", true))
+        }
     }
 
     @Test
@@ -130,6 +139,11 @@ class UserListViewModelTest: MainDispatcherRule() {
             }
 
             state.expectNoEvents()
+        }
+
+        verifySuspend(atMost(1)) {
+            fetchUseCase()
+            reducer.reduce(any(), UserListAction.SearchUsers("", true))
         }
     }
 
@@ -218,7 +232,7 @@ class UserListViewModelTest: MainDispatcherRule() {
     }
 
     @Test
-    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsers() {
+    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsers() = runTest {
 
         everySuspend {
             fetchUseCase()
@@ -259,10 +273,43 @@ class UserListViewModelTest: MainDispatcherRule() {
         }
     }
 
+    @Test
+    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsersForJetbrains() =runTest {
 
-      @Test
-    fun searchForUserOnTypeWhenDefaultUserListIsEmpty() {
+        everySuspend {
+            fetchUseCase()
+        } returns AppSuccess(uiUserListModel)
 
+        everySuspend {
+            fetchUseCase.searchUser(any())
+        } returns AppSuccess(uiUserSearchListModel)
+
+        runViewModelTest(userListViewModel.uiState, userListViewModel.sideEffect) { state, effect ->
+            effect.expectNoEvents()
+
+            advanceUntilIdle()
+
+            userListViewModel.onSearchQueryChanged(SEARCH_QUERY)
+
+            advanceUntilIdle()
+
+            assertEquals(SEARCH_QUERY, savedStateHandle.getStateFlow<String>(SEARCH_QUERY_KEY,"").value)
+            state.awaitItem()   //Need to check, why 3 events are there, only 2 should be there
+            state.awaitItem()
+            with(state.awaitItem()) {
+                assertEquals(uiUserSearchListModel , this.userListSearch)
+                assertEquals(uiUserListModel , this.userList)
+                assertFalse(this.isError)
+                assertFalse(this.userLoading)
+                assertTrue( this.errorMessage.isEmpty())
+            }
+            state.expectNoEvents()
+        }
+    }
+
+
+    @Test
+    fun searchForUserOnTypeWhenDefaultUserListIsEmpty() = runTest {
         everySuspend {
             fetchUseCase()
         } returns AppSuccess<List<UserModel>>(emptyList())
