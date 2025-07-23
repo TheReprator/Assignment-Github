@@ -41,8 +41,8 @@ android {
 }
 
 composeCompiler {
-    reportsDestination = layout.buildDirectory.dir("andorid_compose_compiler")
-    metricsDestination = layout.buildDirectory.dir("android_compose_metric")
+    reportsDestination = layout.buildDirectory.dir("andorid_tv_compose_compiler")
+    metricsDestination = layout.buildDirectory.dir("android_tv_compose_metric")
     stabilityConfigurationFile.set(rootProject.file("compose-stability.conf"))
 }
 

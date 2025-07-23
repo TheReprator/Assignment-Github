@@ -32,7 +32,7 @@ taskList: cleanBuild
 # Generate compose stability report
 reportCompose: manualClean
 	@echo "Compose Compiler Report"
-	$(GRADLEW) assembleDebug -PcomposeCompilerReports=true  --rerun-tasks
+	$(GRADLEW) assembleDebug -PenableComposeCompilerMetrics=true -PenableComposeCompilerReports=true
 	@echo "✅ Done!"
 
 # Run Android build
