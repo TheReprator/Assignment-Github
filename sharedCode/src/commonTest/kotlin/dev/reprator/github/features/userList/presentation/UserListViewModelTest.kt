@@ -61,7 +61,6 @@ class UserListViewModelTest: MainDispatcherRule() {
             reducer = reducer,
             middleWareList = setOf(middleware)
         )
-
     }
 
     @Test
@@ -233,7 +232,7 @@ class UserListViewModelTest: MainDispatcherRule() {
     }
 
     @Test
-    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsers() {
+    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsers() = runTest {
 
         everySuspend {
             fetchUseCase()
@@ -275,7 +274,7 @@ class UserListViewModelTest: MainDispatcherRule() {
     }
 
     @Test
-    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsersForJetbrains() {
+    fun searchForUserOnTypeWhenPreviousListAlreadyHaveDefaultUsersForJetbrains() =runTest {
 
         everySuspend {
             fetchUseCase()
@@ -310,8 +309,7 @@ class UserListViewModelTest: MainDispatcherRule() {
 
 
     @Test
-    fun searchForUserOnTypeWhenDefaultUserListIsEmpty() {
-
+    fun searchForUserOnTypeWhenDefaultUserListIsEmpty() = runTest {
         everySuspend {
             fetchUseCase()
         } returns AppSuccess<List<UserModel>>(emptyList())
